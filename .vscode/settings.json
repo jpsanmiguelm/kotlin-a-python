@@ -1,0 +1,15 @@
+{
+  "mypy-type-checker.args": ["--strict"],
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:USERPROFILE}\\.local\\bin;${env:PATH}"
+  }
+}
