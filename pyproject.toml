@@ -7,7 +7,9 @@ authors = [
     { name = "Sanmi", email = "juanpasanmi@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pydantic>=2.14.1",
+]
 
 [project.scripts]
 kotlin-a-python = "kotlin_a_python:main"
