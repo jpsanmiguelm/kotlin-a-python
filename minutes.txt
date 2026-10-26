@@ -1,0 +1,5 @@
+Bench press,45
+
+Squat,abc
+Row,40
+Curl,30

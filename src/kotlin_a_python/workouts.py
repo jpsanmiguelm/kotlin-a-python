@@ -1,3 +1,4 @@
+from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
 from typing import assert_never
@@ -72,6 +73,29 @@ def to_screen_text(state: WorkoutUiState) -> str:
             assert_never(state)
 
 
+@dataclass(frozen=True)
+class WeeklySummary:
+    muscle: MuscleGroup
+    sessions: int
+    total_minutes: int
+
+
+def summarize(workouts: list[Workout]) -> list[WeeklySummary]:
+    completed = [w for w in workouts if w.is_completed]
+    by_muscle: defaultdict[MuscleGroup, list[Workout]] = defaultdict(list)
+    for w in completed:
+        by_muscle[w.muscle].append(w)
+    summaries = [
+        WeeklySummary(
+            muscle=muscle,
+            sessions=len(items),
+            total_minutes=sum(item.duration_min for item in items),
+        )
+        for muscle, items in by_muscle.items()
+    ]
+    return sorted(summaries, key=lambda summary: summary.total_minutes, reverse=True)
+
+
 def main() -> None:
     dtos = [
         WorkoutDto("1", "Push day", "chest", 3600, "2026-10-20"),
@@ -97,6 +121,11 @@ def main() -> None:
     ]
     for state in states:
         print(to_screen_text(state))
+    print()
+
+    # Snippet 3
+    for s in summarize(workouts):
+        print(f"{s.muscle.name}: {s.sessions} sessions, {s.total_minutes} min")
 
 
 if __name__ == "__main__":
